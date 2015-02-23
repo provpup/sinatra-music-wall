@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SONG LISTR - <%= @song.title %></title>
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>SONG LISTR</h1>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Author</h3>
+        </div>
+        <div class="panel-body"><%= @song.author %></div>
+      </div>
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">Song Title</h3>
+        </div>
+        <div class="panel-body"><%= @song.title %></div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">URL</h3>
+        </div>
+        <div class="panel-body"><a href="<%= @song.url %>"><%= @song.url %></a></div>
+      </div>
+      <p><a href="/songs">Back to All Songs</a></p>
+    </div>
+  </body>
+</html>
