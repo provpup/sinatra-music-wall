@@ -1,9 +1,21 @@
 # Homepage (Root path)
-def check_login(request)
-  redirect '/login' unless @user
+set sessions: true
+
+register do
+  def auth (type)
+    condition do
+      redirect "/login" unless send("is_#{type}?")
+    end
+  end
 end
 
-get '/' do
+helpers do
+  def is_user?
+    session[:user_id]
+  end
+end
+
+get '/', auth: :user do
   check_login(request)
   erb :index
 end
@@ -19,7 +31,7 @@ get '/login' do
 end
 
 get '/logout' do
-  @user = nil
+  session[:user_id] = nil
   redirect '/login'
 end
 
@@ -28,14 +40,12 @@ get '/songs/?' do
   erb :'songs/index'
 end
 
-get '/songs/new' do
-  check_login(request)
+get '/songs/new', auth: :user do
   @song = SongSubmission.new
   erb :'songs/new'
 end
 
-get '/songs/:id' do
-  check_login(request)
+get '/songs/:id', auth: :user do
   @song = SongSubmission.find(params[:id])
   erb :'songs/show'
 end
@@ -44,6 +54,7 @@ post '/signup' do
   @user = User.new(email: params[:email],
                    password: params[:password])
   if @user.save
+    session[:user_id] = @user.id
     redirect '/songs'
   else
     redirect '/signup'
@@ -53,14 +64,15 @@ end
 post '/login' do
   @user = User.find_by(email: params[:email], password: params[:password])
   if @user
+puts "User authenticated: #{@user.email}"
+    session[:user_id] = @user.id
     redirect '/songs'
   else
     redirect '/login'
   end
 end
 
-post '/songs' do
-  check_login(request)
+post '/songs', auth: :user do
   @song = SongSubmission.new(
     title: params[:title],
     url: params[:url],
