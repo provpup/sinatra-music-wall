@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true
 
   has_many :upvotes
+  has_many :song_submissions
 
   def upvoted_song?(song)
     upvotes.any? do |upvote|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223222852) do
+ActiveRecord::Schema.define(version: 20150224030326) do
 
   create_table "song_submissions", force: true do |t|
     t.string   "title"
@@ -18,7 +18,10 @@ ActiveRecord::Schema.define(version: 20150223222852) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "song_submissions", ["user_id"], name: "index_song_submissions_on_user_id"
 
   create_table "upvotes", force: true do |t|
     t.integer  "user_id"

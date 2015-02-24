@@ -89,7 +89,8 @@ post '/songs', auth: :user do
   @song = SongSubmission.new(
     title: params[:title],
     url: params[:url],
-    author: params[:author]
+    author: params[:author],
+    user_id: session[:user_id]
     )
   if @song.save
     redirect '/songs'
