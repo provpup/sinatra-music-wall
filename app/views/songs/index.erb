@@ -28,7 +28,7 @@
             <td class="col-md-2 text-center">
 <% if @user.id && !@user.upvoted_song?(song) %>
               <a href="/upvote?song=<%= song.id%>"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-<% else %>
+<% elsif @user.upvoted_song?(song) %>
               Upvoted
 <% end %>
             </td>
