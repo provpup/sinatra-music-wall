@@ -9,8 +9,10 @@
     <div class="container-fluid">
       <div class="page-header">
         <h1>SONG LISTR <small>Top requested songs</small></h1>
+<% if @user.id %>
         <p class="lead"><a href="/songs/new">Post a song... It's FREE (for now)</a></p>
         <p><a href="/logout" class="btn btn-info" role="button">Logout</a></p>
+<% end %>
       </div>
       <div class="table-responsive">
       <table class="table table-striped">
@@ -25,7 +27,7 @@
         <tbody>
           <% @songs.each do |song| %>
           <tr>
-            <td class="col-md-2 text-center">
+            <td class="col-md-2 text-center">(<%= song.upvotes.count %>)
 <% if @user.id && !@user.upvoted_song?(song) %>
               <a href="/upvote?song=<%= song.id%>"><span class="glyphicon glyphicon-thumbs-up"></span></a>
 <% elsif @user.upvoted_song?(song) %>
