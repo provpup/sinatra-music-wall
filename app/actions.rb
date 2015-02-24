@@ -36,7 +36,8 @@ get '/logout' do
 end
 
 get '/songs/?' do
-  @songs = SongSubmission.includes(:upvotes).group("song_submissions.id").order("count(upvotes.id) DESC")
+  @songs = SongSubmission.includes(:upvotes).group("song_submissions.id")
+                         .order("count(upvotes.id) DESC").references(:upvotes)
 
   if (session[:user_id])
     @user = User.find(session[:user_id])
