@@ -37,6 +37,11 @@ end
 
 get '/songs/?' do
   @songs = SongSubmission.all
+  if (session[:user_id])
+    @user = User.find(session[:user_id])
+  else
+    @user = User.new
+  end
   erb :'songs/index'
 end
 
@@ -48,6 +53,13 @@ end
 get '/songs/:id', auth: :user do
   @song = SongSubmission.find(params[:id])
   erb :'songs/show'
+end
+
+get '/upvote', auth: :user do
+  @song = SongSubmission.find(params[:song])
+  Upvote.create(user_id: session[:user_id], song_submissions_id: @song.id) if @song
+
+  redirect '/songs'
 end
 
 post '/signup' do
@@ -64,7 +76,6 @@ end
 post '/login' do
   @user = User.find_by(email: params[:email], password: params[:password])
   if @user
-puts "User authenticated: #{@user.email}"
     session[:user_id] = @user.id
     redirect '/songs'
   else

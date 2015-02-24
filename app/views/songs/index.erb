@@ -16,6 +16,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th></th>
             <th>Song Title</th>
             <th>Submission Author</th>
             <th>URL</th>
@@ -24,6 +25,13 @@
         <tbody>
           <% @songs.each do |song| %>
           <tr>
+            <td class="col-md-2 text-center">
+<% if @user.id && !@user.upvoted_song?(song) %>
+              <a href="/upvote?song=<%= song.id%>"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+<% else %>
+              Upvoted
+<% end %>
+            </td>
             <td class="col-md-3"><a href="/songs/<%= song.id %>"><%= song.title %></a></td>
             <td class="col-md-3"><%= song.author %></td>
             <td class="col-md-6"><a href="<%= song.url %>"><%= song.url %></a></td>
