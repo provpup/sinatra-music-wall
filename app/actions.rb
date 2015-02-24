@@ -36,7 +36,9 @@ get '/logout' do
 end
 
 get '/songs/?' do
-  @songs = SongSubmission.all
+  @songs = SongSubmission.find(:all, select: 'song_submissions.*, count(upvotes.id) as vote_count',
+             joins: 'left outer join upvotes on upvotes.song_submission_id = song_submissions.id',
+             group: 'song_submissions.id', order: 'vote_count desc')
   if (session[:user_id])
     @user = User.find(session[:user_id])
   else
