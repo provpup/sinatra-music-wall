@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150223222852) do
 
   create_table "upvotes", force: true do |t|
     t.integer  "user_id"
-    t.integer  "song_submissions_id"
+    t.integer  "song_submission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

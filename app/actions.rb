@@ -57,7 +57,7 @@ end
 
 get '/upvote', auth: :user do
   @song = SongSubmission.find(params[:song])
-  Upvote.create(user_id: session[:user_id], song_submissions_id: @song.id) if @song
+  Upvote.create(user_id: session[:user_id], song_submission_id: @song.id) if @song
 
   redirect '/songs'
 end

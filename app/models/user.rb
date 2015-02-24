@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   def upvoted_song?(song)
     upvotes.any? do |upvote|
-      upvote.song_submissions_id == song.id
+      upvote.song_submission_id == song.id
     end
   end
 end
